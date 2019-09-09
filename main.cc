@@ -82,7 +82,7 @@ int main()//int argc, char* argv[])
 				}
 				
 				SDL_RenderPresent( rndr );
-				SDL_Delay( 500 );
+				SDL_Delay( 100 );
 			}
 			SDL_DestroyRenderer( rndr );
 		}

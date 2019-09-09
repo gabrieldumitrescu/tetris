@@ -4,7 +4,15 @@ Game::Game(int width, int height, int brick_sz):
 	m_width(width),m_height(height),m_brick_sz(brick_sz),
 	m_bricks(std::vector<pBrick>()),m_stopped(false)
 {
-	m_piece=std::make_shared<Tetrimino>(0,0,m_brick_sz,I_TETRIMINO);
+	srand (time(NULL));
+	newPiece();
+}
+
+
+void Game::newPiece()
+{
+  Tetrimino_t pieceType=(Tetrimino_t)(rand()%(Z_TETRIMINO+1));
+	m_piece=std::make_shared<Tetrimino>(5*m_brick_sz,0,m_brick_sz,pieceType);
 }
 
 void Game::show(SDL_Renderer* rndr)
@@ -58,7 +66,7 @@ void Game::step()
 				pBrick current=newBricks[i];
 				m_bricks.push_back(current);
 			}
-			m_piece=std::make_shared<Tetrimino>(0,0,m_brick_sz,I_TETRIMINO);
+			newPiece();
 			if(isCollision())
 			{
 				SDL_Log("Game over!");

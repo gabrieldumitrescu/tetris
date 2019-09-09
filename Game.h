@@ -14,6 +14,7 @@ class Game{
 		bool m_stopped;
 		public:
 		Game(int width, int height, int brick_sz);
+		void newPiece();
 		void show(SDL_Renderer*);
 		bool isCollision();
 		void step();

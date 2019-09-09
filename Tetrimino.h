@@ -25,6 +25,13 @@ class Tetrimino{
 		pBrick  m_bricks[TETRIMINO_SIZE];
 		SDL_Point m_pos;
 		Tetrimino_t m_type;	
+		void makeIPiece(int brick_sz);
+		void makeJPiece(int brick_sz);
+		void makeLPiece(int brick_sz);
+		void makeOPiece(int brick_sz);
+		void makeSPiece(int brick_sz);
+		void makeTPiece(int brick_sz);
+		void makeZPiece(int brick_sz);
 	public:
 		Tetrimino(int x, int y, int brick_sz,Tetrimino_t type);
 		pBrick* getBricks() {return m_bricks; }

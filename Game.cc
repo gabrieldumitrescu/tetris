@@ -2,7 +2,8 @@
 
 Game::Game(int width, int height, int brick_sz):
 	m_width(width),m_height(height),m_brick_sz(brick_sz),
-	m_bricks(std::vector<pBrick>()),m_stopped(false)
+	m_bricks(std::vector<pBrick>()),m_stopped(false),
+	m_movingLeft(false), m_movingRight(false)
 {
 	srand (time(NULL));
 	newPiece();
@@ -12,14 +13,31 @@ Game::Game(int width, int height, int brick_sz):
 void Game::newPiece()
 {
   Tetrimino_t pieceType=(Tetrimino_t)(rand()%(Z_TETRIMINO+1));
-	m_piece=std::make_shared<Tetrimino>(5*m_brick_sz,0,m_brick_sz,pieceType);
+	m_piece=std::make_shared<Tetrimino>(4*m_brick_sz,0,m_brick_sz,pieceType);
 }
 
 void Game::show(SDL_Renderer* rndr)
 {
+
 	for(std::vector<pBrick>::iterator it=m_bricks.begin(); it!=m_bricks.end(); ++it)
 	{
 		(*it)->show( rndr );
+	}
+	if(m_movingLeft)
+	{
+		m_piece->move(-m_brick_sz,0);
+		if(isCollision())
+		{
+			m_piece->move(m_brick_sz,0);
+		}
+	}
+	if(m_movingRight)
+	{
+		m_piece->move(m_brick_sz,0);
+		if(isCollision())
+		{
+			m_piece->move(-m_brick_sz,0);
+		}
 	}
 	m_piece->show( rndr );
 }

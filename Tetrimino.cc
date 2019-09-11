@@ -33,6 +33,7 @@ m_type(type)
 void Tetrimino::makeIPiece(int brick_sz)
 {
 	Color pieceCol={0x00,0xFF,0xFF,0xFF};
+	m_pos.x-=brick_sz;
 	int x=m_pos.x,y=m_pos.y;
 	for(int i=0; i<TETRIMINO_SIZE;i++)
 	{
@@ -45,6 +46,7 @@ void Tetrimino::makeIPiece(int brick_sz)
 void Tetrimino::makeJPiece(int brick_sz)
 {
 	Color pieceCol={0x00,0x00,0xFF,0xFF};
+	m_pos.x-=brick_sz;
 	int x=m_pos.x,y=m_pos.y;
 	for(int i=0; i<TETRIMINO_SIZE;i++)
 	{
@@ -69,6 +71,7 @@ void Tetrimino::makeJPiece(int brick_sz)
 void Tetrimino::makeLPiece(int brick_sz)
 {
 	Color pieceCol={0xFF,0xA5,0x00,0xFF};
+	m_pos.x+=brick_sz;
 	int x=m_pos.x,y=m_pos.y;
 	for(int i=0; i<TETRIMINO_SIZE;i++)
 	{
@@ -128,6 +131,7 @@ void Tetrimino::makeOPiece(int brick_sz)
 void Tetrimino::makeZPiece(int brick_sz)
 {
 	Color pieceCol={0xFF,0x00,0x00,0xFF};
+	m_pos.x-=brick_sz;
 	int x=m_pos.x,y=m_pos.y;
 	for(int i=0; i<TETRIMINO_SIZE;i++)
 	{

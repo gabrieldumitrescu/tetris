@@ -1,8 +1,8 @@
-#my-tetris
+# My-tetris
 
 Tetris-like game using SDL2 library.
 
-##Installation
+## Installation
 
 Requires SDL2 library.
 On an Ubuntu machine it can be installed with:
@@ -21,7 +21,7 @@ cmake -G "Unix Makefiles" ..
 make
 ```
 
-##Running
+## Running
 
 Run the executable.
 

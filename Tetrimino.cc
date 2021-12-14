@@ -1,165 +1,150 @@
 #include "Tetrimino.h"
 
 Tetrimino::Tetrimino(int x, int y,int brick_sz,Tetrimino_t type):
-m_type(type)
+	m_type(type),m_sz(brick_sz)
 {
 	m_pos={x,y};
 	switch(type)
 	{
 		case I_TETRIMINO:
-			makeIPiece(brick_sz);
+			makeIPiece();
 			break;
 		case J_TETRIMINO:
-			makeJPiece(brick_sz);
+			makeJPiece();
 			break;
 		case L_TETRIMINO:
-			makeLPiece(brick_sz);
+			makeLPiece();
 			break;
 		case O_TETRIMINO:
-			makeOPiece(brick_sz);
+			makeOPiece();
 			break;
 		case S_TETRIMINO:
-			makeSPiece(brick_sz);
+			makeSPiece();
 			break;
 		case T_TETRIMINO:
-			makeTPiece(brick_sz);
+			makeTPiece();
 			break;
 		case Z_TETRIMINO:
-			makeZPiece(brick_sz);
+			makeZPiece();
 			break;
 	}
 }
 
-void Tetrimino::makeIPiece(int brick_sz)
+
+void Tetrimino::updateBricks(){
+
+	int offset=m_version * 2 * TETRIMINO_SIZE;
+	m_ver_start=m_type_start + offset;
+	placeBricks();
+}
+
+void Tetrimino::makeBricks() 
 {
-	Color pieceCol={0x00,0xFF,0xFF,0xFF};
-	m_pos.x-=brick_sz;
-	int x=m_pos.x,y=m_pos.y;
 	for(int i=0; i<TETRIMINO_SIZE;i++)
 	{
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		x+=brick_sz;
+		m_bricks[i]=std::make_shared<Brick>(0,0,m_sz,m_sz,m_color);
+	}
+}
+
+void Tetrimino::placeBricks() 
+{
+	for(int i=0; i<TETRIMINO_SIZE;i++)
+	{
+		int x=m_ver_start[i * 2];
+		int y=m_ver_start[i * 2 + 1];
+		m_bricks[i]->setPos(m_pos.x + x * m_sz,m_pos.y + y * m_sz);
 	}
 }
 
 
-void Tetrimino::makeJPiece(int brick_sz)
+void Tetrimino::makeIPiece(int version)
 {
-	Color pieceCol={0x00,0x00,0xFF,0xFF};
-	m_pos.x-=brick_sz;
-	int x=m_pos.x,y=m_pos.y;
-	for(int i=0; i<TETRIMINO_SIZE;i++)
-	{
-		if(i==TETRIMINO_SIZE-2)
-		{
-			y-=brick_sz;
-			x+=brick_sz;
-		}
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		if(i<2)
-		{
-			y+=brick_sz;
-		}
-		else
-		{
-			x+=brick_sz;
-		}
-	}
+	m_color={0x00,0xFF,0xFF,0xFF};
+	m_type_start=(int*) I_TETRIMINO_VER;
+	m_num_versions=I_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=m_sz;
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
 }
 
 
-void Tetrimino::makeLPiece(int brick_sz)
+void Tetrimino::makeJPiece(int version)
 {
-	Color pieceCol={0xFF,0xA5,0x00,0xFF};
-	m_pos.x+=brick_sz;
-	int x=m_pos.x,y=m_pos.y;
-	for(int i=0; i<TETRIMINO_SIZE;i++)
-	{
-
-		if(i==TETRIMINO_SIZE-2)
-		{
-			x-=2*brick_sz;
-			y-=brick_sz;
-		}
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		if(i<2)
-		{
-			y+=brick_sz;
-		}
-		else
-		{
-			x+=brick_sz;
-		}
-	}
+	m_color={0x00,0x00,0xFF,0xFF};
+	m_type_start=(int*) J_TETRIMINO_VER;
+	m_num_versions=J_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=m_sz;
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
 }
 
 
-void Tetrimino::makeTPiece(int brick_sz)
+void Tetrimino::makeLPiece(int version)
 {
-	Color pieceCol={0xFF,0x00,0xFF,0xFF};
-	int x=m_pos.x,y=m_pos.y;
-	for(int i=0; i<TETRIMINO_SIZE;i++)
-	{
-		if(i==TETRIMINO_SIZE-1)
-		{
-			x-=2*brick_sz;
-			y+=brick_sz;
-		}
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		x+=brick_sz;
-	}
+	m_color={0xFF,0xA5,0x00,0xFF};
+	m_type_start=(int*) L_TETRIMINO_VER;
+	m_num_versions=L_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=m_sz;
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
 }
 
 
-void Tetrimino::makeOPiece(int brick_sz)
+void Tetrimino::makeTPiece(int version)
 {
-	Color pieceCol={0xFF,0xFF,0x00,0xFF};
-	int x=m_pos.x,y=m_pos.y;
-	for(int i=0; i<TETRIMINO_SIZE;i++)
-	{
-		if(i==TETRIMINO_SIZE-2)
-		{
-			x-=2*brick_sz;
-			y+=brick_sz;
-		}
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		x+=brick_sz;
-	}
+	m_color={0xFF,0x00,0xFF,0xFF};
+	m_type_start=(int*) T_TETRIMINO_VER;
+	m_num_versions=T_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=m_sz;
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
 }
 
 
-void Tetrimino::makeZPiece(int brick_sz)
+void Tetrimino::makeOPiece(int version)
 {
-	Color pieceCol={0xFF,0x00,0x00,0xFF};
-	m_pos.x-=brick_sz;
-	int x=m_pos.x,y=m_pos.y;
-	for(int i=0; i<TETRIMINO_SIZE;i++)
-	{
-		if(i==TETRIMINO_SIZE-2)
-		{
-			x-=brick_sz;
-			y+=brick_sz;
-		}
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		x+=brick_sz;
-	}
+	m_color={0xFF,0xFF,0x00,0xFF};
+	m_type_start=(int*) O_TETRIMINO_VER;
+	m_num_versions=O_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=(m_sz);
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
 }
 
 
-void Tetrimino::makeSPiece(int brick_sz)
+void Tetrimino::makeZPiece(int version)
 {
-	Color pieceCol={0x00,0xFF,0x00,0xFF};
-	int x=m_pos.x,y=m_pos.y;
-	for(int i=0; i<TETRIMINO_SIZE;i++)
-	{
-		if(i==TETRIMINO_SIZE-2)
-		{
-			x-=3*brick_sz;
-			y+=brick_sz;
-		}
-		m_bricks[i]=std::make_shared<Brick>(x,y,brick_sz,brick_sz,pieceCol);
-		x+=brick_sz;
-	}
+	m_color={0xFF,0x00,0x00,0xFF};
+	m_type_start=(int*) Z_TETRIMINO_VER;
+	m_num_versions=Z_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=m_sz;
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
+}
+
+
+void Tetrimino::makeSPiece(int version)
+{
+	m_color={0x00,0xFF,0x00,0xFF};
+	m_type_start=(int*) S_TETRIMINO_VER;
+	m_num_versions=S_TETRIMINO_NUM_VERSIONS;
+	m_version=version<m_num_versions ? version : 0;
+	m_pos.x-=m_sz;
+	m_pos.y-=(2*m_sz);
+	makeBricks();
+	updateBricks();
 }
 
 void Tetrimino::show(SDL_Renderer* rndr) const
@@ -175,5 +160,18 @@ void Tetrimino::move(int x, int y)
 	for(int i=0; i<TETRIMINO_SIZE;i++){
 		m_bricks[i]->move(x,y);
 	}
+}
+
+void Tetrimino::rotate(bool forward)
+{
+	if (forward) {
+		m_version++;
+		if(m_version>=m_num_versions) m_version=0;
+	}
+	else {
+		m_version--;
+		if(m_version<0) m_version=m_num_versions-1;
+	}
+	updateBricks();
 }
 

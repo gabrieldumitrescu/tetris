@@ -8,6 +8,8 @@ Brick::Brick(int x, int y, int w, int h, Color c, bool renderOutline):
 
 void Brick::show(SDL_Renderer* rndr)
 {
+	//if(m_rect.x < 0 || m_rect.y < 0 || m_rect.w < 0 || m_rect.h < 0)
+	//	return;	
 	SDL_SetRenderDrawColor( rndr, m_color.r, m_color.g, m_color.b, m_color.a );				
 	SDL_RenderFillRect( rndr, &m_rect);
 	if(m_renderOutline)

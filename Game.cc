@@ -50,8 +50,7 @@ bool Game::isCollision()
 		{
 			pBrick current=newBricks[i];
 			SDL_Point pos=current->getPos();
-			if(pos.x<0 || pos.x+m_brick_sz>m_width ||
-				 pos.y<0 || pos.y+m_brick_sz>m_height)
+			if(pos.x<0 || pos.x+m_brick_sz>m_width || pos.y+m_brick_sz>m_height)
 			{
 				return true;
 			}
@@ -90,7 +89,7 @@ void Game::step()
 				SDL_Log("Game over!");
 				m_stopped=true;
 			}
-			SDL_Log("m_bricks has %lu elements\n",m_bricks.size());
+			//SDL_Log("m_bricks has %lu elements\n",m_bricks.size());
 		}
 	}
 }

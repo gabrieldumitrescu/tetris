@@ -93,6 +93,9 @@ int main()//int argc, char* argv[])
 							case SDLK_RIGHT:
 								tetrisGame.movePieceRight(true);
 								break;
+							case SDLK_DOWN:
+								tetrisGame.rotatePiece();
+								break;
 						}
 					}
 					else if(e.type == SDL_KEYUP)

@@ -21,6 +21,7 @@ class Game{
 		bool isStopped() const { return m_stopped; }
 		void movePieceLeft(bool move){ m_movingLeft=move; }
 		void movePieceRight(bool move) { m_movingRight=move; }		
+		void rotatePiece() { m_piece->rotate(); }
 };
 
 #endif //GAME_H

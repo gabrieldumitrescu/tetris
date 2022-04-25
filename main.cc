@@ -8,12 +8,14 @@
 #include "Game.h"
 
 
+/* Must add comments */
+
 #define APP_NAME "Tetris"
 
 const int SCREEN_WIDTH=400;
 const int SCREEN_HEIGHT=800;
 const int BRICK_SIZE=40;
-const float FRAME_RATE=10.0;
+const float FRAME_RATE=5.0;
 
 
 void printSDL2Error(const char* msg)
